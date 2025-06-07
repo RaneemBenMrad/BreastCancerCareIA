@@ -1,0 +1,67 @@
+/* style.css - Design doux et moderne pour site santé féminine */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff9fb;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header.jumbotron {
+    background: linear-gradient(to right, #f781bf, #fddde6);
+    color: white;
+    padding: 4rem 2rem;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+    font-weight: bold;
+    color: #c2185b;
+}
+
+.lead {
+    font-size: 1.3rem;
+    color: #fce4ec;
+}
+
+.btn-primary {
+    background-color: #c2185b;
+    border-color: #c2185b;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #ad1457;
+    border-color: #ad1457;
+}
+
+section.container h2 {
+    color: #880e4f;
+    margin-bottom: 0.5rem;
+}
+
+section.container p {
+    font-size: 1rem;
+    color: #555;
+}
+
+footer {
+    background-color: #f8c8dc;
+    color: #880e4f;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header.jumbotron h1 {
+        font-size: 2rem;
+    }
+    .lead {
+        font-size: 1rem;
+    }
+}

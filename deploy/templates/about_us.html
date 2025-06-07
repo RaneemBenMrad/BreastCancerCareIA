@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block head %}
+    <style>
+        /* Modern styles for About Us page */
+        .about-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Wave header */
+        .about-header {
+            position: relative;
+            padding: 60px 0 80px;
+            background: linear-gradient(135deg, #ff80b3, #ff4d94);
+            clip-path: ellipse(120% 80% at 50% 0%);
+            text-align: center;
+            color: #fff;
+        }
+
+        .about-heading {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1s ease-out;
+        }
+
+        /* Content section */
+        .about-content {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px); /* Glassmorphism effect */
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .about-section {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .about-section h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .about-section p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Photo frame */
+        .about-photo {
+            max-width: 200px;
+            margin: 20px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(255, 77, 148, 0.1);
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .about-photo img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .about-photo:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Ribbon divider */
+        .ribbon-divider {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .ribbon-icon {
+            width: 50px;
+            height: auto;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-header {
+                padding: 40px 0 60px;
+                clip-path: ellipse(150% 70% at 50% 0%);
+            }
+
+            .about-heading {
+                font-size: 2.2rem;
+            }
+
+            .about-content {
+                padding: 20px;
+            }
+
+            .about-section h3 {
+                font-size: 1.4rem;
+            }
+
+            .about-section p {
+                font-size: 1rem;
+            }
+
+            .about-photo {
+                max-width: 150px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .about-header {
+                padding: 30px 0 50px;
+            }
+
+            .about-heading {
+                font-size: 1.8rem;
+            }
+
+            .about-content {
+                padding: 15px;
+            }
+
+            .about-section h3 {
+                font-size: 1.2rem;
+            }
+
+            .about-section p {
+                font-size: 0.9rem;
+            }
+
+            .about-photo {
+                max-width: 120px;
+            }
+
+            .ribbon-icon {
+                width: 40px;
+            }
+        }
+    </style>
+{% endblock %}
+{% block title %}About Us - BreastCancer.org{% endblock %}
+{% block content %}
+    <div class="about-container">
+        <div class="about-header">
+            <h2 class="about-heading">About Us</h2>
+        </div>
+        <div class="about-content">
+            <div class="ribbon-divider">
+              <i class="fas fa-ribbon me-2"> </i>
+            </div>
+            <div class="about-section">
+                <h3>Meet Ranim Ben Mrad</h3>
+                <div class="about-photo">
+                    <img src="{{ url_for('static', filename='images/ranim.jpg') }}" alt="Ranim Ben Mrad">
+                </div>
+                <p>
+                    Ranim Ben Mrad is a passionate data scientist who leverages her professional skills to make a meaningful impact. With a deep commitment to women's health, Ranim created "Here For HER" to support women around the world in their fight against breast cancer. Through advanced AI tools, educational resources, and a supportive community, she aims to empower women with knowledge and hope.
+                </p>
+            </div>
+            <div class="about-section">
+                <h3>Our Mission</h3>
+                <p>
+                    "Here For HER" is a platform dedicated to providing women with accessible tools and information about breast cancer. From AI-driven tumor predictions to educational content and a compassionate chatbot, we strive to be a beacon of support and empowerment for women everywhere.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

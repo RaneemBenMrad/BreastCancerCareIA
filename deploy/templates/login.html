@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<style>
+  :root {
+    --primary-color: #d81b60; /* Vibrant pink */
+    --secondary-color: #1e2a44; /* Dark navy for text */
+    --accent-color: #fce4ec; /* Light pink for backgrounds */
+    --light-color: #ffffff; /* White for body */
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--light-color);
+    color: var(--secondary-color);
+    line-height: 1.6;
+  }
+
+  .auth-container {
+    max-width: 500px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: var(--light-color);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .auth-container:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .auth-container h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .auth-container p {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+  }
+
+  .auth-container a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .auth-container a:hover {
+    color: #b0003a;
+    text-decoration: underline;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--secondary-color);
+    background: var(--light-color);
+    transition: border-color 0.3s ease;
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(216, 27, 96, 0.1);
+  }
+
+  .form-check {
+    margin-top: 0.75rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .form-check input {
+    margin-right: 0.5rem;
+  }
+
+  .form-check label {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+  }
+
+  .btn {
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 50px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--light-color);
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .btn:hover {
+    background-color: #b0003a;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .auth-links {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  .auth-links a {
+    display: block;
+    margin: 0.5rem 0;
+  }
+
+  @media (max-width: 576px) {
+    .auth-container {
+      margin: 1.5rem;
+      padding: 1.5rem;
+    }
+
+    .auth-container h1 {
+      font-size: 1.75rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1.5rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<div class="auth-container">
+  <h1>Login</h1>
+  <p>Please enter your details below.</p>
+
+  <form method="POST" action="{{ url_for('login') }}">
+    <div class="form-group">
+      <label for="email">Email address *</label>
+      <input type="email" id="email" name="email" placeholder="Email address" required>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password *</label>
+      <input type="password" id="password" name="password" placeholder="Password" required>
+    </div>
+
+    <div class="form-check">
+      <input type="checkbox" id="remember" name="remember">
+      <label for="remember">Remember me</label>
+    </div>
+
+    <button type="submit" class="btn">Submit</button>
+  </form>
+
+  <div class="auth-links">
+    <a href="#">Forgotten password? ></a>
+    <p>Don't have an account on the forum? <a href="{{ url_for('signup') }}">Sign up now</a></p>
+    <p>Looking to join our healthcare professional network? <a href="#">Apply now</a></p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block head %}
+    <style>
+        /* Modern styles for Learn page */
+        .learn-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Wave effect for header background */
+        .learn-header {
+            position: relative;
+            padding: 60px 0 80px;
+            background: linear-gradient(135deg, #ff80b3, #ff4d94); /* Soft pink gradient */
+            clip-path: ellipse(120% 80% at 50% 0%);
+            text-align: center;
+            color: #fff;
+        }
+
+        .learn-heading {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1s ease-out;
+        }
+
+        .learn-intro {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        /* Options section with modern cards */
+        .learn-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+            padding: 0 20px;
+        }
+
+        .learn-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px); /* Glassmorphism effect */
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .learn-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(255, 77, 148, 0.2);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #ff4d94;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .learn-card:hover .card-icon {
+            transform: scale(1.2);
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .card-description {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .card-link {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #ff4d94;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 30px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .card-link:hover {
+            background: #ff80b3;
+            transform: scale(1.05);
+        }
+
+        /* Quote section */
+        .learn-quote-section {
+            background: #f9f5f8;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 40px;
+            border-radius: 15px;
+        }
+
+        .learn-quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #ff4d94;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .learn-quote::before,
+        .learn-quote::after {
+            content: '"';
+            font-size: 2rem;
+            color: #ff80b3;
+            position: absolute;
+        }
+
+        .learn-quote::before {
+            top: -10px;
+            left: -20px;
+        }
+
+        .learn-quote::after {
+            bottom: -10px;
+            right: -20px;
+        }
+
+        .quote-author {
+            display: block;
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .learn-header {
+                padding: 40px 0 60px;
+                clip-path: ellipse(150% 70% at 50% 0%);
+            }
+
+            .learn-heading {
+                font-size: 2.2rem;
+            }
+
+            .learn-intro {
+                font-size: 1rem;
+            }
+
+            .learn-card {
+                padding: 20px;
+            }
+
+            .card-title {
+                font-size: 1.4rem;
+            }
+
+            .card-description {
+                font-size: 0.9rem;
+            }
+
+            .card-link {
+                padding: 10px 25px;
+            }
+
+            .learn-quote {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .learn-header {
+                padding: 30px 0 50px;
+            }
+
+            .learn-heading {
+                font-size: 1.8rem;
+            }
+
+            .learn-intro {
+                font-size: 0.9rem;
+            }
+
+            .card-icon {
+                font-size: 2rem;
+            }
+
+            .card-title {
+                font-size: 1.2rem;
+            }
+
+            .card-link {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+
+            .learn-quote {
+                font-size: 1rem;
+            }
+        }
+    </style>
+{% endblock %}
+{% block title %}Learn - BreastCancer.org{% endblock %}
+{% block content %}
+    <div class="learn-container">
+        <div class="learn-header">
+            <h2 class="learn-heading">Learn About Breast Cancer</h2>
+            <p class="learn-intro">
+                Empower yourself with knowledge. Explore resources, ask questions, and use our tools to understand breast cancer better.
+            </p>
+        </div>
+        <div class="learn-options">
+            <div class="learn-card">
+                <i class="fas fa-comment-medical card-icon"></i>
+                <h3 class="card-title">Ask Our Chatbot</h3>
+                <p class="card-description">Get answers to your questions about breast cancer symptoms, treatments, and more.</p>
+                <a href="{{ url_for('chat') }}" class="card-link">Chat Now</a>
+            </div>
+            <div class="learn-card">
+                <i class="fas fa-clipboard-list card-icon"></i>
+                <h3 class="card-title">Predict Tumor Details</h3>
+                <p class="card-description">Use our AI model to predict if a tumor is benign or malignant.</p>
+                <a href="{{ url_for('tumor_details_prediction') }}" class="card-link">Predict Now</a>
+            </div>
+            <div class="learn-card">
+                <i class="fas fa-newspaper card-icon"></i>
+                <h3 class="card-title">Summarize Articles</h3>
+                <p class="card-description">Read concise summaries of breast cancer articles.</p>
+                <a href="{{ url_for('article_summarizer') }}" class="card-link">Summarize Now</a>
+            </div>
+        </div>
+        <div class="learn-quote-section">
+            <blockquote class="learn-quote">
+                Knowledge is power. Information is liberating.
+                <span class="quote-author">— Kofi Annan</span>
+            </blockquote>
+        </div>
+    </div>
+{% endblock %}

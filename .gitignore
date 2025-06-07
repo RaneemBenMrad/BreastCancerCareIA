@@ -1,0 +1,15 @@
+# Fichier .gitignore
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.dll
+*.lib
+*.h5
+*.pkl
+*.zip
+*.whl
+*.egg-info/

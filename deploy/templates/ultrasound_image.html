@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultrasound Image Prediction - Breast Cancer Support</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #d81b60; /* Vibrant pink */
+      --secondary-color: #1e2a44; /* Dark navy for text */
+      --accent-color: #fce4ec; /* Light pink for backgrounds */
+      --light-color: #ffffff; /* White for body */
+      --form-bg: #f9f9fb; /* Softer form background */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light-color);
+      color: var(--secondary-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Motivational Header */
+  .motivational-header {
+      background: linear-gradient(135deg, rgba(216, 27, 96, 0.85), rgba(142, 36, 170, 0.85)),
+        url('https://images.unsplash.com/photo-1613665811410-94b1c404e7de') center/cover no-repeat;
+      color: var(--light-color);
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+
+    .motivational-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: var(--form-bg);
+      clip-path: ellipse(100% 60% at 50% 100%);
+    }
+
+   .motivational-header h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .motivational-header p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 1rem;
+    }
+
+    .motivational-header .quote {
+      font-family: 'Playfair Display', italic;
+      font-style: italic;
+      font-size: 1.5rem;
+      max-width: 600px;
+      margin: 1.5rem auto 0;
+      line-height: 1.4;
+      color: #ffebee;
+    }
+
+    .motivational-header .quote::before {
+      content: '“';
+      font-size: 2rem;
+      margin-right: 0.5rem;
+    }
+
+    .motivational-header .quote::after {
+      content: '”';
+      font-size: 2rem;
+      margin-left: 0.5rem;
+    }
+
+    .motivational-header .quote-author {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      color: #f8bbd0;
+    }
+
+    /* Form Section */
+    .form-section {
+      padding: 3rem 1rem;
+      background: var(--form-bg);
+      min-height: calc(100vh - 300px);
+      display: flex;
+      align-items: center;
+    }
+
+    .form-card {
+      max-width: 400px;
+      background: var(--light-color);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .form-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      border-color: var(--primary-color);
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: var(--secondary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-control, .form-control-file {
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+      padding: 0.75rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus, .form-control-file:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(216, 27, 96, 0.25);
+      outline: none;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-color), #8e24aa);
+      border: none;
+      border-radius: 30px;
+      padding: 0.8rem 2.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      color: var(--light-color);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #b0003a, #6b1b88);
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Prediction Result */
+    .prediction-result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 8px;
+      background: var(--accent-color);
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* Process Steps */
+    .process-steps {
+      max-width: 400px;
+    }
+
+    .process-step {
+      margin-bottom: 1rem;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .step-header:hover {
+      background: var(--accent-color);
+    }
+
+    .step-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-right: 1rem;
+      min-width: 2rem;
+      text-align: center;
+    }
+
+    .step-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--secondary-color);
+    }
+
+    .step-content {
+      padding: 1rem 0 0 3rem;
+      font-size: 1rem;
+      color: #455a64;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .motivational-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .motivational-header p {
+        font-size: 1.1rem;
+      }
+
+      .motivational-header .quote {
+        font-size: 1.3rem;
+      }
+
+      .form-section {
+        padding: 2rem 1rem;
+      }
+
+      .form-section .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .process-steps, .form-card {
+        max-width: 100%;
+        margin-bottom: 2rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .motivational-header {
+        padding: 3rem 1rem 5rem;
+      }
+
+      .motivational-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .motivational-header p {
+        font-size: 1rem;
+      }
+
+      .motivational-header .quote {
+        font-size: 1.1rem;
+      }
+
+      .form-card {
+        padding: 1.5rem;
+      }
+
+      .btn-primary {
+        padding: 0.6rem 2rem;
+        font-size: 0.9rem;
+      }
+
+      .step-number {
+        font-size: 1.2rem;
+      }
+
+      .step-title {
+        font-size: 1rem;
+      }
+
+      .step-content {
+        font-size: 0.9rem;
+        padding-left: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Motivational Header -->
+  <header class="motivational-header">
+    <div class="container">
+      <h1>Ultrasound Image Prediction 🎗️</h1>
+      <p class="quote">I'm here today because I refused to be unhappy. I took a chance.</p>
+      <p class="quote-author">— Wanda Sykes 💖</p>
+    </div>
+  </header>
+
+  <!-- Form Section -->
+  <section class="form-section">
+    <div class="container d-flex justify-content-between flex-wrap">
+      <!-- Process Steps (Left) -->
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-header" data-bs-toggle="collapse" data-bs-target="#step1" aria-expanded="false" aria-controls="step1">
+            <div class="step-number">1</div>
+            <div class="step-title">Upload Your Image</div>
+          </div>
+          <div class="step-content collapse" id="step1">
+            <p>Select a clear ultrasound image from your device. Ensure the image is well-lit and focused for accurate analysis.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-header" data-bs-toggle="collapse" data-bs-target="#step2" aria-expanded="false" aria-controls="step2">
+            <div class="step-number">2</div>
+            <div class="step-title">Submit for Analysis</div>
+          </div>
+          <div class="step-content collapse" id="step2">
+            <p>Click the submit button to send your image to our advanced prediction model, which analyzes the image for potential signs of breast cancer.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-header" data-bs-toggle="collapse" data-bs-target="#step3" aria-expanded="false" aria-controls="step3">
+            <div class="step-number">3</div>
+            <div class="step-title">View Results</div>
+          </div>
+          <div class="step-content collapse" id="step3">
+            <p>Receive an immediate prediction result indicating whether the image suggests a benign or malignant condition. Consult a healthcare professional for confirmation.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Card (Right) -->
+      <div class="form-card">
+        <h2 class="fw-bold mb-4 text-center">Upload Ultrasound Image</h2>
+        <!-- Affichage des messages flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="alert-container mb-3">
+              {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        <form method="POST" action="/ultrasound-image-prediction" enctype="multipart/form-data">
+          <div class="mb-4">
+            <label for="ultrasound_image" class="form-label">Select Ultrasound Image</label>
+            <input type="file" class="form-control-file" id="ultrasound_image" name="ultrasound_image" accept="image/*" required>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Submit for Analysis</button>
+          </div>
+          {% if prediction %}
+          <div class="prediction-result">
+            {{ prediction | safe }}
+          </div>
+          {% endif %}
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}Donate - Breast Cancer Now{% endblock %}
+{% block content %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .donate-wrapper {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .donate-main {
+            flex: 1;
+            min-width: 600px;
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .donate-sidebar {
+            flex: 0 0 300px;
+            background: #f8bbd0;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            color: #6d1b4b;
+        }
+        .donate-sidebar h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #e91e63;
+        }
+        .donate-sidebar p {
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+        .donate-sidebar img {
+            width: 100%;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .header {
+            margin-bottom: 30px;
+            padding: 15px;
+            background: linear-gradient(135deg, #e91e63, #d81b60);
+            color: #fff;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.2em;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .header img {
+            width: 60px;
+            margin: 10px 0;
+            transition: transform 0.3s ease;
+        }
+        .header img:hover {
+            transform: scale(1.1);
+        }
+        .header p {
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        .section {
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .section h2 {
+            color: #6d1b4b;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .section label {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 1em;
+            color: #444;
+            transition: color 0.2s ease;
+        }
+        .section label:hover {
+            color: #e91e63;
+        }
+        .section input[type="radio"],
+        .section input[type="checkbox"] {
+            margin-right: 12px;
+            cursor: pointer;
+        }
+        .amount-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .amount-buttons label {
+            background: linear-gradient(135deg, #f8bbd0, #f48fb1);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .amount-buttons label:hover {
+            background: linear-gradient(135deg, #f06292, #ec407a);
+            transform: scale(1.05);
+        }
+        .custom-amount {
+            margin-top: 15px;
+            display: none;
+        }
+        .custom-amount input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+        .custom-amount input:focus {
+            border-color: #e91e63;
+            outline: none;
+        }
+        .donor-info input,
+        .payment-info input,
+        .message textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .donor-info input:focus,
+        .payment-info input:focus,
+        .message textarea:focus {
+            border-color: #e91e63;
+            box-shadow: 0 0 5px rgba(233, 30, 99, 0.3);
+            outline: none;
+        }
+        .admin-fees,
+        .gift-aid,
+        .message {
+            background: #fce4ec;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #f8bbd0;
+        }
+        .admin-fees a,
+        .gift-aid p,
+        .message p {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+        }
+        .message textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        .payment-info button {
+            background: linear-gradient(135deg, #6d1b4b, #4a1132);
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .payment-info button:hover {
+            background: linear-gradient(135deg, #4a1132, #3d0e28);
+            transform: scale(1.05);
+        }
+        .payment-info p {
+            font-size: 0.9em;
+            color: #666;
+            text-align: right;
+        }
+        .support-box {
+            width: 100%;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+        .support-box.experiencing {
+            background: #fffde7;
+            color: #6d1b4b;
+        }
+        .support-box.security {
+            background: #fff9c4;
+            color: #6d1b4b;
+        }
+        .support-box h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        .support-box p {
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        a {
+            color: #e91e63;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        a:hover {
+            color: #d81b60;
+        }
+        @media (max-width: 900px) {
+            .donate-wrapper {
+                flex-direction: column;
+                margin: 20px;
+                padding: 15px;
+            }
+            .donate-main,
+            .donate-sidebar {
+                flex: 1;
+                min-width: 100%;
+            }
+            .donate-sidebar {
+                order: -1;
+            }
+            .amount-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .amount-buttons label {
+                width: 80%;
+            }
+        }
+    </style>
+
+    <div class="donate-wrapper">
+        <!-- Main Donation Form -->
+        <div class="donate-main">
+            <!-- Header Section -->
+            <div class="header">
+                <h1>Be a HERO for HER</h1>
+                <p>Secure donation <span style="color: #ffca28;">🔒</span></p>
+                <p style="color: #fff;">* indicates a required field</p>
+            </div>
+
+            <!-- Donation Frequency Section -->
+            <div class="section">
+                <h2>Donation Frequency</h2>
+                <div style="display: flex; justify-content: center; gap: 15px;">
+                    <label style="background: #f8bbd0; padding: 12px 25px; border: 1px solid #6d1b4b; border-radius: 25px;">
+                        <input type="radio" name="frequency" value="single" checked style="margin-right: 10px;"> One-time donation
+                    </label>
+                    <label style="background: #f8bbd0; padding: 12px 25px; border: 1px solid #6d1b4b; border-radius: 25px;">
+                        <input type="radio" name="frequency" value="regular" style="margin-right: 10px;"> Monthly donation
+                    </label>
+                </div>
+            </div>
+
+            <!-- Donation Amount Section -->
+            <div class="section">
+                <h2>My donation</h2>
+                <p>I am making a one-time donation of <span style="color: #e91e63;">*</span></p>
+                <div class="amount-buttons">
+                    <label><input type="radio" name="amount" value="10" required style="margin-right: 10px;"> 10 DT</label>
+                    <label><input type="radio" name="amount" value="30" style="margin-right: 10px;"> 30 DT</label>
+                    <label><input type="radio" name="amount" value="60" style="margin-right: 10px;"> 60 DT</label>
+                    <label><input type="radio" name="amount" value="other" id="other-amount-radio" style="margin-right: 10px;"> Other</label>
+                </div>
+                <div class="custom-amount">
+                    <input type="number" id="custom-amount" name="custom_amount" placeholder="Enter custom amount (DT)" disabled>
+                </div>
+            </div>
+
+            <!-- Donation Type Section -->
+            <div class="section">
+                <h2>Donation type</h2>
+                <label><input type="radio" name="donation_type" value="personal" checked> This is a personal donation.</label>
+                <label><input type="radio" name="donation_type" value="fundraised"> I am paying in money I have fundraised.</label>
+                <label><input type="radio" name="donation_type" value="group"> This is a donation on behalf of a group or organisation.</label>
+                <p style="font-size: 0.9em; color: #666;">We encourage personal donations to support our local efforts in Tunisia.</p>
+            </div>
+
+            <!-- Admin Fees Section -->
+            <div class="section admin-fees">
+                <h2>Admin Fees</h2>
+                <label><input type="checkbox" name="admin_fees"> I’d like to add 0.00 DT to my donation to cover admin fees</label>
+                <a href="#" style="font-size: 0.9em;">What’s this? ✝</a>
+            </div>
+
+            <!-- Donation Purpose Section -->
+            <div class="section">
+                <h2>My donation is...</h2>
+                <label><input type="radio" name="purpose" value="general" checked> A general donation.</label>
+                <label><input type="radio" name="purpose" value="memory"> In memory of someone.</label>
+                <label><input type="radio" name="purpose" value="other"> For another reason.</label>
+            </div>
+
+            <!-- Gift Aid Replacement Section -->
+            <div class="section">
+                <h2>Local Support</h2>
+                <p style="font-size: 0.9em; color: #666;">Your donation supports breast cancer awareness and care programs across Tunisia. Thank you for your contribution!</p>
+            </div>
+
+            <!-- Message Section -->
+            <div class="section message">
+                <h2>Leave a message with your donation</h2>
+                <p style="font-size: 0.9em; color: #666;">If you would like to tell us more about your donation or its purpose, please let us know (optional)</p>
+                <textarea id="message" name="message" placeholder="Enter your message"></textarea>
+                <p style="font-size: 0.9em; color: #666; text-align: right;">150 characters remaining</p>
+            </div>
+
+            <!-- Payment Details Section -->
+            <div class="section payment-info">
+                <h2>Payment details <span style="color: #ffca28;">*</span></h2>
+                <p>Please select how you would like to pay</p>
+                <button type="button">Credit / debit card <img src="https://via.placeholder.com/20" alt="Card Icon" style="vertical-align: middle; margin-left: 5px;"></button>
+                <p style="font-size: 0.9em; color: #666; text-align: right;">Payments securely processed by Braintree <span style="color: #ffca28;">🔒</span></p>
+            </div>
+
+            <!-- Support Information Section -->
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                <div class="support-box experiencing">
+                    <h3>Experiencing difficulties?</h3>
+                    <p>We’re here to help, so please don’t hesitate to contact us:</p>
+                    <p>Email: contact@breastcancernow.tn</p>
+                    <p>Tel: +216 71 123 456</p>
+                </div>
+                <div class="support-box security">
+                    <h3>Security and privacy are important to us</h3>
+                    <p>We promise to keep your details safe and will never share them with others. See our privacy statement for more information.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Section -->
+        <div class="donate-sidebar">
+            <h3>Every Donation Counts in Tunisia</h3>
+            <p>Every day, women in Tunisia face breast cancer. Your support funds local research, care, and awareness programs.</p>
+            <img src="{{ url_for('static', filename='images/support-image.jpg') }}" alt="Support Image">
+            <p><strong>30 DT</strong> could fund an hour of local research.</p>
+            <p><strong>60 DT</strong> could provide care for a patient in need.</p>
+        </div>
+    </div>
+
+    <script>
+        const otherRadio = document.getElementById('other-amount-radio');
+        const customInput = document.getElementById('custom-amount');
+        const amountRadios = document.getElementsByName('amount');
+
+        otherRadio.addEventListener('change', () => {
+            customInput.style.display = 'block';
+            customInput.disabled = false;
+            customInput.required = true;
+        });
+
+        amountRadios.forEach(radio => {
+            if (radio !== otherRadio) {
+                radio.addEventListener('change', () => {
+                    customInput.style.display = 'none';
+                    customInput.disabled = true;
+                    customInput.required = false;
+                    customInput.value = '';
+                });
+            }
+        });
+    </script>
+{% endblock %}

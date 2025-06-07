@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BreastCancer.org</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #d81b60; /* Vibrant pink */
+      --secondary-color: #1e2a44; /* Dark navy for text */
+      --accent-color: #fce4ec; /* Light pink for backgrounds */
+      --dark-color: #0a1428; /* Deep navy for footer */
+      --light-color: #ffffff; /* White for body */
+      --success-color: #1b5e20; /* Green for success states */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light-color);
+      color: var(--secondary-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: var(--light-color);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-brand:hover {
+      color: #b0003a;
+    }
+
+    .nav-link {
+      color: var(--secondary-color);
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.5rem 1.25rem;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover, .nav-link:focus {
+      color: var(--primary-color);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, rgba(216, 27, 96, 0.9), rgba(142, 36, 170, 0.9)),
+        url('https://images.unsplash.com/photo-1576091160550-2173dba999ef') center/cover no-repeat;
+      color: var(--light-color);
+      padding: 8rem 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-section h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .hero-section p {
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background-color: var(--primary-color);
+      border: none;
+      border-radius: 50px;
+      padding: 0.75rem 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #b0003a;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-outline-light {
+      border: 2px solid var(--light-color);
+      border-radius: 50px;
+      padding: 0.75rem 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: var(--light-color);
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline-light:hover {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+
+    /* Cards */
+    .news-card, .community-card, .testimonial-card, .stat-card, .recent-news-card, .service-card {
+      background: var(--light-color);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .news-card:hover, .community-card:hover, .testimonial-card:hover, .recent-news-card:hover, .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .badge {
+      background: var(--primary-color);
+      color: var(--light-color);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+    }
+
+    .testimonial-card .quote {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #455a64;
+      border-left: 4px solid var(--primary-color);
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .community-card {
+      background: linear-gradient(135deg, var(--primary-color), #8e24aa);
+      color: var(--light-color);
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .btn-community {
+      background: var(--light-color);
+      color: var(--primary-color);
+      border-radius: 50px;
+      padding: 0.75rem 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-community:hover {
+      background: #f5f5f5;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Stats */
+    .stat-card {
+      padding: 2rem;
+      text-align: center;
+      background: var(--accent-color);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    /* Recent News */
+    .recent-news-card img {
+      object-fit: cover;
+      height: 200px;
+      width: 100%;
+    }
+
+    .recent-news-card .card-body {
+      padding: 1.5rem;
+    }
+
+    /* Service Cards */
+    .service-card {
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .service-icon {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    /* Chatbot */
+    .chatbot-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    .chatbot-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .chatbot-container {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 320px;
+      max-height: 400px;
+      background: var(--light-color);
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .chatbot-header {
+      background: var(--primary-color);
+      color: var(--light-color);
+      padding: 1rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chatbot-body {
+      padding: 1rem;
+      flex-grow: 1;
+      overflow-y: auto;
+      background: var(--accent-color);
+    }
+
+    .chatbot-message {
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      max-width: 80%;
+    }
+
+    .chatbot-message.bot {
+      background: var(--primary-color);
+      color: var(--light-color);
+      margin-left: auto;
+    }
+
+    .chatbot-message.user {
+      background: #e0e0e0;
+      color: var(--secondary-color);
+      margin-right: auto;
+    }
+
+    .chatbot-input {
+      padding: 1rem;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+    }
+
+    .chatbot-input input {
+      flex-grow: 1;
+      border: none;
+      border-radius: 20px;
+      padding: 0.5rem 1rem;
+      margin-right: 0.5rem;
+      outline: none;
+    }
+
+    .chatbot-input button {
+      background: var(--primary-color);
+      color: var(--light-color);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark-color);
+      color: #90a4ae;
+      padding: 4rem 0;
+    }
+
+    footer h5 {
+      color: var(--light-color);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      font-size: 1.25rem;
+    }
+
+    footer a {
+      color: #90a4ae;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: var(--light-color);
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .hero-section h1 {
+        font-size: 2.25rem;
+      }
+
+      .hero-section p {
+        font-size: 1.1rem;
+      }
+
+      .navbar-brand {
+        font-size: 1.5rem;
+      }
+
+      .chatbot-container {
+        width: 280px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero-section {
+        padding: 5rem 0;
+      }
+
+      .hero-section h1 {
+        font-size: 1.75rem;
+      }
+
+      .hero-section p {
+        font-size: 1rem;
+      }
+
+      .btn-primary, .btn-outline-light, .btn-community {
+        padding: 0.5rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
+
+      .chatbot-container {
+        width: 90%;
+        right: 5%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#"><i class="fas fa-ribbon me-2"></i>BreastCancer.org</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('learn') }}">Learn</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Connect</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('about_us') }}">About Us</a></li>
+          <li class="nav-item">
+            <a class="btn btn-primary ms-3" href="{{ url_for('donate') }}">Donate</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-section">
+    <div class="container">
+      <h1>Empowering You Through Breast Cancer</h1>
+      <p>Join our supportive community for trusted resources, connections, and advanced detection tools.</p>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="#" class="btn btn-primary">Explore Resources</a>
+        <a href="#" class="btn btn-outline-light">Join Community</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5 fw-bold">Our Services</h2>
+      <div class="row g-4">
+        <div class="col-md-3">
+          <a href="/tumor-details-prediction" class="text-decoration-none">
+            <div class="service-card">
+              <div class="service-icon"><i class="fas fa-clipboard-list"></i></div>
+              <h5 class="fw-bold">Tumor Details Prediction</h5>
+              <p class="text-muted">Enter tumor details to predict breast cancer risk.</p>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-3">
+          <a href="/ultrasound-image-prediction" class="text-decoration-none">
+            <div class="service-card">
+              <div class="service-icon"><i class="fas fa-image"></i></div>
+              <h5 class="fw-bold">Ultrasound Image Prediction</h5>
+              <p class="text-muted">Upload an ultrasound image for cancer detection.</p>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-3">
+          <a href="/article-summarizer" class="text-decoration-none">
+            <div class="service-card">
+              <div class="service-icon"><i class="fas fa-newspaper"></i></div>
+              <h5 class="fw-bold">Article Summaries</h5>
+              <p class="text-muted">Read summaries of breast cancer research articles.</p>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-3">
+          <a href="/pdf_chat" class="text-decoration-none">
+            <div class="service-card">
+              <div class="service-icon"><i class="fas fa-comment-medical"></i></div>
+              <h5 class="fw-bold">PDF Chatbot</h5>
+              <p class="text-muted">Get instant answers with our health chatbot.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Surveys and Webinars -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5 fw-bold">Get Involved</h2>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="news-card p-4">
+            <span class="badge">Survey</span>
+            <h3 class="mt-3 fw-bold">Young Breast Cancer Diagnosis?</h3>
+            <p class="text-muted">Your experience can inspire and support others in our community.</p>
+            <a href="#" class="btn btn-primary">Take the Survey</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="news-card p-4">
+            <span class="badge bg-success">Webinar</span>
+            <h3 class="mt-3 fw-bold">Mental Health & Breast Cancer</h3>
+            <p class="text-muted">Learn from experts about nurturing your mental wellbeing.</p>
+            <a href="#" class="btn btn-primary">Register Now</a>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community and Testimonial -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-6">
+          <div class="testimonial-card p-4">
+            <div class="d-flex align-items-center mb-3">
+              <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Vanessa" class="rounded-circle me-3" style="width: 60px; height: 60px;">
+              <div>
+                <h5 class="mb-0">Vanessa</h5>
+                <p class="text-muted small mb-0">Member Since 2023</p>
+              </div>
+            </div>
+            <p class="quote">"Connecting with others facing the same diagnosis has brought me peace, comfort, and hope."</p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="community-card">
+            <h3 class="fw-bold mb-3">Join Our Community</h3>
+            <p class="mb-4">Connect with others, track treatments, participate in research, and access tailored resources.</p>
+            <a href="{{ url_for('signup') }}" class="btn btn-community">Sign Up Now <i class="fas fa-arrow-right ms-2"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5 fw-bold">Our Impact</h2>
+      <div class="row g-4 text-center">
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div class="feature-icon"><i class="fas fa-users"></i></div>
+            <div class="stat-number">12,548</div>
+            <p class="mb-0">Active Members</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div class="feature-icon"><i class="fas fa-comments"></i></div>
+            <div class="stat-number">3,245</div>
+            <p class="mb-0">Discussions</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
+            <div class="stat-number">42</div>
+            <p class="mb-0">Events</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <div class="feature-icon"><i class="fas fa-hand-holding-heart"></i></div>
+            <div class="stat-number">89%</div>
+            <p class="mb-0">Satisfaction</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent News -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Recent News</h2>
+        <a href="#" class="btn btn-link text-decoration-none">See More <i class="fas fa-arrow-right ms-1"></i></a>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="recent-news-card">
+            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Research Breakthrough">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Research Breakthrough</h5>
+              <p class="card-text text-muted">New advancements in breast cancer treatment unveiled.</p>
+              <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="recent-news-card">
+            <img src="https://images.unsplash.com/photo-1581595219315-a187dd40c322?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Inspiring Story">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Inspiring Story</h5>
+              <p class="card-text text-muted">Marie shares her journey of resilience and recovery.</p>
+              <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="recent-news-card">
+            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Wellness Workshops">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Wellness Workshops</h5>
+              <p class="card-text text-muted">Join our online workshops for holistic support.</p>
+              <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-md-4">
+          <h5>BreastCancer.org</h5>
+          <p>Your trusted partner in navigating breast cancer with confidence and support.</p>
+        </div>
+        <div class="col-md-2">
+          <h5>Learn</h5>
+          <ul class="list-unstyled">
+            <li><a href="{{ url_for('learn') }}">Diagnosis</a></li>
+            <li><a href="{{ url_for('learn') }}">Treatment</a></li>
+            <li><a href="{{ url_for('learn') }}">Recovery</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2">
+          <h5>Connect</h5>
+          <ul class="list-unstyled">
+            <li><a href="{{ url_for('login') }}">Forums</a></li>
+            <li><a href="{{ url_for('login') }}">Support Groups</a></li>
+            <li><a href="{{ url_for('login') }}">Stories</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2">
+          <h5>About</h5>
+          <ul class="list-unstyled">
+            <li><a href="{{ url_for('about_us') }}">Mission</a></li>
+            <li><a href="{{ url_for('about_us') }}">Team</a></li>
+            <li><a href="{{ url_for('about_us') }}">Partners</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2">
+          <h5>Get Involved</h5>
+          <ul class="list-unstyled">
+            <li><a href="{{ url_for('donate') }}">Volunteer</a></li>
+            <li><a href="{{ url_for('donate') }}">Careers</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="text-center pt-5">
+        <small>© 2025 BreastCancer.org. All rights reserved.</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chatbot Button and Container -->
+  <div class="chatbot-btn" id="chatbotToggle">
+    <i class="fas fa-comment-medical"></i>
+  </div>
+  <div class="chatbot-container" id="chatbotContainer">
+    <div class="chatbot-header">
+      <span> Here For HER 🌸 </span>
+      <i class="fas fa-times" id="chatbotClose"></i>
+    </div>
+    <div class="chatbot-body" id="chatbotBody">
+      <div class="chatbot-message bot">Bonjour ! Je suis ici pour répondre à vos questions sur le cancer du sein en français, anglais ou arabe. Que voulez-vous savoir ?</div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="chatbotInput" placeholder="Tapez votre question...">
+      <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Chatbot toggle functionality
+    const chatbotToggle = document.getElementById('chatbotToggle');
+    const chatbotContainer = document.getElementById('chatbotContainer');
+    const chatbotClose = document.getElementById('chatbotClose');
+    const chatbotSend = document.getElementById('chatbotSend');
+    const chatbotInput = document.getElementById('chatbotInput');
+    const chatbotBody = document.getElementById('chatbotBody');
+
+    // Toggle chatbot visibility and load history
+    chatbotToggle.addEventListener('click', async () => {
+      const isHidden = chatbotContainer.style.display === 'none';
+      chatbotContainer.style.display = isHidden ? 'flex' : 'none';
+
+      if (isHidden) {
+        // Fetch and display chat history
+        try {
+          const response = await fetch('/chatbot/history', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+          });
+          const data = await response.json();
+          chatbotBody.innerHTML = ''; // Clear existing messages
+          data.history.forEach(({ user, bot }) => {
+            if (user) {
+              const userMessage = document.createElement('div');
+              userMessage.className = 'chatbot-message user';
+              userMessage.textContent = user;
+              chatbotBody.appendChild(userMessage);
+            }
+            const botMessage = document.createElement('div');
+            botMessage.className = 'chatbot-message bot';
+            botMessage.textContent = bot;
+            chatbotBody.appendChild(botMessage);
+          });
+          chatbotBody.scrollTop = chatbotBody.scrollHeight;
+        } catch (error) {
+          console.error('Error loading chat history:', error);
+          const botMessage = document.createElement('div');
+          botMessage.className = 'chatbot-message bot';
+          botMessage.textContent = 'Erreur lors du chargement de l’historique. Veuillez réessayer.';
+          chatbotBody.appendChild(botMessage);
+          chatbotBody.scrollTop = chatbotBody.scrollHeight;
+        }
+      }
+    });
+
+    chatbotClose.addEventListener('click', () => {
+      chatbotContainer.style.display = 'none';
+    });
+
+    // Send message to backend
+    async function sendMessage() {
+      const message = chatbotInput.value.trim();
+      if (!message) return;
+
+      // Add user message
+      const userMessage = document.createElement('div');
+      userMessage.className = 'chatbot-message user';
+      userMessage.textContent = message;
+      chatbotBody.appendChild(userMessage);
+      chatbotInput.value = '';
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+
+      try {
+        const response = await fetch('/chatbot', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message })
+        });
+        const data = await response.json();
+
+        // Add bot response
+        const botMessage = document.createElement('div');
+        botMessage.className = 'chatbot-message bot';
+        botMessage.textContent = data.response || 'Désolé, je n’ai pas pu traiter votre demande.';
+        chatbotBody.appendChild(botMessage);
+        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+      } catch (error) {
+        const botMessage = document.createElement('div');
+        botMessage.className = 'chatbot-message bot';
+        botMessage.textContent = 'Erreur de connexion au serveur. Veuillez réessayer.';
+        chatbotBody.appendChild(botMessage);
+        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+      }
+    }
+
+    chatbotSend.addEventListener('click', sendMessage);
+
+    chatbotInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+  </script>
+</body>
+</html>

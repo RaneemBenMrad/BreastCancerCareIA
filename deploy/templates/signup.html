@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<style>
+  :root {
+    --primary-color: #d81b60; /* Vibrant pink */
+    --secondary-color: #1e2a44; /* Dark navy for text */
+    --accent-color: #fce4ec; /* Light pink for backgrounds */
+    --light-color: #ffffff; /* White for body */
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--light-color);
+    color: var(--secondary-color);
+    line-height: 1.6;
+  }
+
+  .auth-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: var(--light-color);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .auth-container:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .auth-container h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .auth-container p {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-bottom:1rem;
+  }
+
+  .auth-container a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .auth-container a:hover {
+    color: #b0003a;
+    text-decoration: underline;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .form-group input, .form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--secondary-color);
+    background: var(--light-color);
+    transition: border-color 0.3s ease;
+  }
+
+  .form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(216, 27, 96, 0.1);
+  }
+
+  .form-group .help-text {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+  }
+
+  .form-check {
+    margin-top: 0.75rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .form-check input {
+    margin-right: 0.5rem;
+  }
+
+  .form-check label {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+  }
+
+  .btn {
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 50px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--light-color);
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .btn:hover {
+    background-color: #b0003a;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (max-width: 576px) {
+    .auth-container {
+      margin: 1.5rem;
+      padding: 1.5rem;
+    }
+
+    .auth-container h1 {
+      font-size: 1.75rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1.5rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<div class="auth-container">
+  <h1>Sign Up</h1>
+  <p>Please complete the form below to sign up for an account on the Breast Cancer Now forum. Users need to be 18 years old or over to sign up for the forum.</p>
+  <p>Already have an account? <a href="{{ url_for('login') }}"><strong>Log in now</strong> ></a></p>
+
+  <form method="POST" action="{{ url_for('signup') }}">
+    <div class="form-group">
+      <label for="first_name">First name *</label>
+      <input type="text" id="first_name" name="first_name" placeholder="First name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="last_name">Last name *</label>
+      <input type="text" id="last_name" name="last_name" placeholder="Last name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email address *</label>
+      <input type="email" id="email" name="email" placeholder="Email address" required>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password (minimum 12 characters) *</label>
+      <p class="help-text">Please include upper and lowercase characters, at least one special character and number.</p>
+      <input type="password" id="password" name="password" placeholder="Password" required>
+      <div class="form-check">
+        <input type="checkbox" id="show_password" onchange="togglePasswordVisibility()">
+        <label for="show_password">Show password</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirm_password">Confirm Password *</label>
+      <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+    </div>
+
+    <div class="form-group">
+      <label>I am registering for *</label>
+      <select name="register_for" required>
+        <option value="" disabled selected>Please select...</option>
+        <option value="personal">Personal use (patient/survivor)</option>
+        <option value="professional">Professional (healthcare provider)</option>
+        <option value="researcher">Researcher</option>
+        <option value="supporter">Supporter/Volunteer</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <p>We'd like to tell you ways you can help further, including through donating, fundraising, campaigning and volunteering, and send you updates on our research, the support we provide, breast health information and our wider work to achieve our aims.</p>
+      <p>To help us work more efficiently, we may analyze your information to make sure you receive the most relevant communications, and to target our digital advertising. You can ask us to stop this at any time. You can read more about how we will use your information in our <a href="#">Privacy policy</a>.</p>
+      <p>If you already hear from us, we will continue to contact you in the same way. If you don't already hear from us, please tick the box if you are happy to be contacted:</p>
+      <div class="form-check">
+        <input type="checkbox" id="hear_from_us" name="hear_from_us">
+        <label for="hear_from_us">I'd like to hear from you by email</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <p>You need to be 18 years old or over to sign up to the forum *</p>
+      <div class="form-check">
+        <input type="checkbox" id="over_18" name="over_18" required>
+        <label for="over_18">I confirm I am 18 years old or over</label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn">Submit</button>
+  </form>
+</div>
+
+<script>
+  function togglePasswordVisibility() {
+    const passwordField = document.getElementById('password');
+    const confirmField = document.getElementById('confirm_password');
+    const showPassword = document.getElementById('show_password').checked;
+
+    passwordField.type = showPassword ? 'text' : 'password';
+    confirmField.type = showPassword ? 'text' : 'password';
+  }
+</script>
+{% endblock %}
